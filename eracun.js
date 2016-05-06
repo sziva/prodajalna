@@ -149,7 +149,7 @@ var strankaIzRacuna = function(racunId, callback) {
       if(napaka){
         callback(null);
       }else{
-      callback(vrstice);
+      callback(vrstice[0]);
       }
     })
 }
@@ -159,8 +159,8 @@ streznik.post('/izpisiRacunBaza', function(zahteva, odgovor) {
   var form = new formidable.IncomingForm();
   form.parse(zahteva, function (napaka1, polja, datoteke) {
     var racunId = polja.seznamRacunov;
-    strankaIzRacuna(polja.seznamRacunov, function(stranka){
-      pesmiIzRacuna(polja.seznamRacunov, function(pesmi){
+    strankaIzRacuna(racunId, function(stranka){
+      pesmiIzRacuna(racunId, function(pesmi){
         odgovor.setHeader('content-type', 'text/xml');
         odgovor.render('eslog', {
            vizualiziraj: true,
