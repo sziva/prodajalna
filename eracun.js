@@ -161,21 +161,28 @@ streznik.post('/izpisiRacunBaza', function(zahteva, odgovor) {
     var racunId = polja.seznamRacunov;
     strankaIzRacuna(racunId, function(stranka){
       pesmiIzRacuna(racunId, function(pesmi){
-        odgovor.setHeader('content-type', 'text/xml');
-        odgovor.render('eslog', {
-           vizualiziraj: true,
-           postavkeRacuna: pesmi,
-           FirstName: stranka.FirstName,
-           LastName: stranka.LastName,
-           Company: stranka.Company,
-           Address: stranka.Address,
-           City: stranka.City,
-           Country: stranka.Country,
-           PostalCode: stranka.PostalCode,
-           Phone: stranka.Phone,
-           Fax: stranka.Fax,
-           Email: stranka.Email,
-        })
+        for(var i = 0; i<pesmi.length;i++){
+          pesmi[i].stopnja = davcnaStopnja(pesmi[i].opisArtikla.match(/\((.*?)\)/g), pesmi[i].zanr);
+        }
+        if(!pesmi || !stranka)
+          odgovor.sendStatus(500);
+        else{
+          odgovor.setHeader('content-type', 'text/xml');
+          odgovor.render('eslog', {
+             vizualiziraj: true,
+             postavkeRacuna: pesmi,
+             FirstName: stranka.FirstName,
+             LastName: stranka.LastName,
+             Company: stranka.Company,
+             Address: stranka.Address,
+             City: stranka.City,
+             Country: stranka.Country,
+             PostalCode: stranka.PostalCode,
+             Phone: stranka.Phone,
+             Fax: stranka.Fax,
+             Email: stranka.Email,
+          })
+        }
       })
     })
   })
