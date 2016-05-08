@@ -28,7 +28,6 @@ streznik.use(
 
 var razmerje_usd_eur = 0.877039116;
 
-
 function davcnaStopnja(izvajalec, zanr) {
   switch (izvajalec) {
     case "Queen": case "Led Zepplin": case "Kiss":
@@ -286,6 +285,7 @@ streznik.post('/prijava', function(zahteva, odgovor) {
     } catch (err) {
       napaka2 = true;
     }
+    
     
     if(napaka1||napaka2){
       sporociloORegistraciji = "Prišlo je do napake pri registraciji nove stranke. Prosim preverite vnešene podatke in poskusite znova";
